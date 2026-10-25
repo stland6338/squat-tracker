@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f766e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="スクワット">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="style.css">
+<title>スクワット記録</title>
+</head>
+<body>
+<header><h1>スクワット記録</h1></header>
+<main>
+<!-- カメラ -->
+<section id="tab-camera" class="tab active">
+  <div id="setup" class="card">
+    <h2>カメラの置き方</h2>
+    <svg viewBox="0 0 320 130" class="diagram" aria-label="置き方の図">
+      <rect x="10" y="70" width="22" height="40" rx="4" fill="#0f766e"/><text x="4" y="125" font-size="11">iPhone</text>
+      <line x1="32" y1="90" x2="250" y2="90" stroke="#999" stroke-dasharray="4"/>
+      <text x="110" y="84" font-size="12">2〜3m はなれる</text>
+      <circle cx="265" cy="30" r="9" fill="#444"/><line x1="265" y1="39" x2="265" y2="75" stroke="#444" stroke-width="5"/>
+      <line x1="265" y1="75" x2="258" y2="112" stroke="#444" stroke-width="5"/><line x1="265" y1="75" x2="275" y2="112" stroke="#444" stroke-width="5"/>
+      <text x="230" y="125" font-size="11">横向きに立つ</text>
+    </svg>
+    <ul>
+      <li>iPhoneを壁や物に<b>縦向き</b>で立てかける（腰くらいの高さ）</li>
+      <li>カメラに対して<b>体の横側</b>を向ける</li>
+      <li>2〜3m はなれて、<b>頭から足先まで全身</b>が映るようにする</li>
+      <li><b>明るい場所</b>で、体の線が分かる服がおすすめ</li>
+    </ul>
+    <p class="note">🔒 映像はこのiPhoneの中だけで処理します。外部には送信・保存しません（最初に判定用のプログラムとモデルを読み込むときだけ通信します）。</p>
+    <label>カメラ <select id="facing"><option value="user">インカメラ（画面を見ながら）</option><option value="environment">外カメラ</option></select></label>
+    <button id="start" class="primary">カメラを起動</button>
+    <p id="camerr" class="err"></p>
+  </div>
+  <div id="live" hidden>
+    <div class="stage"><video id="video" playsinline muted></video><canvas id="overlay"></canvas>
+      <div id="hud"><div id="count">0</div><div id="settime">0:00</div></div>
+      <div id="feedback"></div>
+    </div>
+    <div class="row">
+      <button id="setbtn" class="primary">セット開始</button>
+      <button id="switchcam">カメラ切替</button>
+      <button id="stopcam">終了</button>
+    </div>
+    <div id="angles" class="small"></div>
+    <ol id="replist" class="replist"></ol>
+  </div>
+  <div id="rest" class="card" hidden>
+    <h2>休憩中</h2><div id="resttime" class="big">1:30</div>
+    <button id="skiprest">休憩を終える</button>
+  </div>
+  <div class="card">
+    <h2>今日のセッション</h2>
+    <div id="sessionSummary" class="small">まだセットはありません</div>
+    <button id="saveSession" class="primary">記録に保存</button>
+  </div>
+</section>
+
+<!-- 記録 -->
+<section id="tab-log" class="tab">
+  <div class="card">
+    <h2>手入力で記録</h2>
+    <form id="manual">
+      <label>日付 <input type="date" name="date" required></label>
+      <label>回数（1セット） <input type="number" name="reps" min="1" max="200" value="12" required></label>
+      <label>セット数 <input type="number" name="sets" min="1" max="20" value="3" required></label>
+      <label>所要時間（分） <input type="number" name="minutes" min="0" step="0.5" value="10"></label>
+      <label>フォームスコア（0〜100、空欄可） <input type="number" name="score" min="0" max="100"></label>
+      <button class="primary">保存</button>
+    </form>
+  </div>
+  <div class="card"><h2>週ごとの合計</h2><table id="weekly"></table></div>
+  <div class="card"><h2>履歴</h2><table id="history"></table></div>
+</section>
+
+<!-- 体 -->
+<section id="tab-body" class="tab">
+  <div class="card">
+    <h2>体重・ウエスト</h2>
+    <form id="bodyform">
+      <label>日付 <input type="date" name="date" required></label>
+      <label>体重（kg） <input type="number" name="weight" step="0.1" min="30" max="250"></label>
+      <label>ウエスト（cm） <input type="number" name="waist" step="0.1" min="40" max="200"></label>
+      <button class="primary">保存</button>
+    </form>
+    <p class="small">毎朝、起きてトイレのあと同じ条件で測ると比べやすいです。</p>
+  </div>
+  <div class="card"><h2>体重の推移</h2><canvas id="wchart" class="chart"></canvas></div>
+  <div class="card"><h2>ウエストの推移</h2><canvas id="cchart" class="chart"></canvas></div>
+  <div class="card"><h2>体の記録</h2><table id="bodyhist"></table></div>
+</section>
+
+<!-- 正しいやり方 -->
+<section id="tab-howto" class="tab">
+  <div class="card">
+    <h2>正しいやり方（動画）</h2>
+    <p class="small">なかやまきんに君の公式YouTubeチャンネル「ザ・きんにくTV」の動画です。要点は動画と公式サイトの内容をこのアプリでまとめたものです。</p>
+    <div class="video">
+      <a href="https://www.youtube.com/watch?v=SFnfYPktYBU" target="_blank" rel="noopener">▶ 【自宅筋トレ】なかやまきんに君の正しいスクワットを学ぼう。</a>
+      <ul class="small"><li>膝はつま先と同じ向きに曲げる。内側に入らないように</li><li>上がったときにお尻をぐっと引き締める</li><li>タオルなどを内ももに挟むと内ももに効かせやすい</li></ul>
+    </div>
+    <div class="video">
+      <a href="https://www.youtube.com/watch?v=0HIaPspC7lQ" target="_blank" rel="noopener">▶ 【解説付き】2025年最新版、世界で一番楽に腹筋・お尻・内腿を１０種目１０分間です。</a>
+      <ul class="small"><li>1種目めがワイドスクワット。足幅を広く、つま先は外側</li><li>膝を前に出さず、お尻を少し後ろに引く</li><li>胸を張り、前傾しすぎない（腰の運動になってしまう）</li><li>下ろすときに吸って、上げるときに吐く</li></ul>
+    </div>
+    <div class="video">
+      <a href="https://www.youtube.com/watch?v=G0KSSXOmL-Y" target="_blank" rel="noopener">▶ 【最新版・初級＆中級者向け】世界で一番楽に体脂肪を燃やす筋トレ＆有酸素運動１０種目１０分間です。</a>
+      <ul class="small"><li>スクワットを含む全身の脂肪燃焼メニュー（減量向け）</li><li>体はまっすぐ、前傾しすぎない。つま先と同じ方向に膝を曲げる</li><li>きつければ時間を短くしたり休憩を長めにして調整する</li></ul>
+    </div>
+  </div>
+  <div class="card">
+    <h2>フォームの要点</h2>
+    <p class="small">出典：なかやまきんに君.com「自宅で出来る正しい筋トレ 〜下半身・お尻〜」の内容をまとめたもの</p>
+    <ol>
+      <li>胸を張り、背筋を伸ばす</li>
+      <li>足は肩幅よりやや広く、つま先はやや外へ</li>
+      <li>つま先と同じ方向に膝を曲げる</li>
+      <li>太ももの裏が床と平行になるまで下ろす</li>
+      <li>膝がつま先より前に出すぎないよう、お尻を少し後ろに引く</li>
+      <li>かかとに体重を感じる</li>
+      <li>下ろすときに吸って、上げるときに吐く</li>
+    </ol>
+    <p class="small">よくない例：前傾しすぎ（腰に負担が逃げる）、猫背（腰や背中を痛めやすい）。</p>
+    <a href="https://nakayamakinnikun.com/blogs/blog/hometraining-lowerbody" target="_blank" rel="noopener">公式サイトの記事を開く</a>
+  </div>
+</section>
+
+<!-- 設定 -->
+<section id="tab-settings" class="tab">
+  <div class="card">
+    <h2>設定</h2>
+    <label>休憩時間（秒） <input type="number" id="restSec" min="30" max="300" step="5"></label>
+    <label>判定の深さ（膝の角度、小さいほど深い） <input type="number" id="depthKnee" min="70" max="130"></label>
+    <label>前傾の上限（度） <input type="number" id="maxLean" min="20" max="80"></label>
+    <label><input type="checkbox" id="sound"> 音を鳴らす</label>
+    <button id="saveSettings" class="primary">設定を保存</button>
+  </div>
+  <div class="card">
+    <h2>データ</h2>
+    <button id="export">JSONで書き出す</button>
+    <label class="filebtn">JSONを読み込む <input type="file" id="import" accept="application/json"></label>
+    <button id="wipe" class="danger">すべて削除</button>
+    <p class="small">データはこのiPhoneのSafariの中だけに保存されます。ときどき書き出しておくと安心です。</p>
+  </div>
+</section>
+<p class="caution">⚠ 膝や腰が痛いときはすぐに中止してください。このアプリの判定は目安で、医療アドバイスではありません。</p>
+</main>
+<nav>
+  <button data-tab="camera" class="active">📷<span>カメラ</span></button>
+  <button data-tab="log">📝<span>記録</span></button>
+  <button data-tab="body">⚖️<span>体</span></button>
+  <button data-tab="howto">🎬<span>やり方</span></button>
+  <button data-tab="settings">⚙️<span>設定</span></button>
+</nav>
+<script type="module" src="app.js"></script>
+</body>
+</html>
