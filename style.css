@@ -78,3 +78,11 @@ nav button{background:none;border:none;backdrop-filter:none}
 nav button.active{color:#00f5d4;background:none;text-shadow:0 0 12px #00f5d4;border-top:2px solid #00f5d4}
 .video a{color:#ff2bd6}
 @media (prefers-reduced-motion:reduce){body{animation:none}}
+/* PCでも劇的に見える強化 */
+body{background:radial-gradient(60vw 60vh at 8% 0,#8a2bff99,transparent 65%),radial-gradient(55vw 55vh at 100% 10%,#ff2bd677,transparent 65%),radial-gradient(70vw 60vh at 50% 110%,#00f5d466,transparent 65%),linear-gradient(160deg,#0a0420,#07060f 50%,#030f1a);background-attachment:fixed}
+h1{display:inline-block;background-size:200% 100%;animation:titleflow 5s linear infinite;filter:drop-shadow(0 0 10px #00f5d4aa)}
+@keyframes titleflow{to{background-position:200% 0}}
+header{background:linear-gradient(90deg,#0b0420e6,#07060fe6)}
+main{max-width:720px}
+.card{border-color:#00f5d466;box-shadow:0 0 0 1px #ff2bd633,0 0 28px #7c1fff55,inset 0 0 24px #00f5d414}
+@media (min-width:900px){body::before{content:"";position:fixed;inset:0;background-image:linear-gradient(#00f5d412 1px,transparent 1px),linear-gradient(90deg,#00f5d412 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:-1}}
