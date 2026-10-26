@@ -174,15 +174,15 @@ $('#bodyform').onsubmit = (e) => {
 function chart(cv, pts, unit) {
   const dpr = devicePixelRatio || 1, W = cv.clientWidth || 300, H = cv.clientHeight || 180;
   cv.width = W * dpr; cv.height = H * dpr; const c = cv.getContext('2d'); c.scale(dpr, dpr); c.clearRect(0, 0, W, H);
-  c.font = '12px sans-serif'; c.fillStyle = '#666';
+  c.font = '12px sans-serif'; c.fillStyle = '#9a9a9a';
   if (pts.length < 2) { c.fillText('2日分以上記録するとグラフが出ます', 10, H / 2); return; }
   const ys = pts.map((p) => p.v), min = Math.min(...ys) - 0.5, max = Math.max(...ys) + 0.5, L = 40, B = 20;
   const X = (i) => L + (i * (W - L - 10)) / (pts.length - 1), Y = (v) => 10 + ((max - v) * (H - B - 10)) / (max - min);
   c.fillText(max.toFixed(1), 2, 16); c.fillText(min.toFixed(1), 2, H - B);
   c.fillText(pts[0].d.slice(5), L, H - 4); c.fillText(pts.at(-1).d.slice(5), W - 45, H - 4);
-  c.strokeStyle = '#0f766e'; c.lineWidth = 2; c.beginPath();
+  c.strokeStyle = '#c6ff00'; c.lineWidth = 2; c.beginPath();
   pts.forEach((p, i) => (i ? c.lineTo(X(i), Y(p.v)) : c.moveTo(X(i), Y(p.v)))); c.stroke();
-  c.fillStyle = '#0f766e'; pts.forEach((p, i) => { c.beginPath(); c.arc(X(i), Y(p.v), 3, 0, 7); c.fill(); });
+  c.fillStyle = '#c6ff00'; pts.forEach((p, i) => { c.beginPath(); c.arc(X(i), Y(p.v), 3, 0, 7); c.fill(); });
 }
 function renderBody() {
   const b = store.get('body', []).sort((x, y) => x.date.localeCompare(y.date));

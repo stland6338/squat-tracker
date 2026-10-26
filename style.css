@@ -20,8 +20,8 @@ button,.filebtn{font-size:16px;padding:10px 14px;border-radius:10px;border:1px s
 .stage{position:relative;background:#000;border-radius:12px;overflow:hidden}
 .stage video,.stage canvas{width:100%;display:block}.stage canvas{position:absolute;inset:0;height:100%}
 .mirror{transform:scaleX(-1)}
-#hud{position:absolute;top:8px;left:8px;right:8px;display:flex;justify-content:space-between;color:#fff;font-weight:bold;text-shadow:0 0 6px #000}
-#count{font-size:56px}#settime{font-size:28px}
+#hud{position:absolute;top:4px;left:8px;right:8px;display:flex;justify-content:space-between;color:#fff;font-weight:bold;text-shadow:0 0 6px #000}
+#count{font-size:clamp(110px,34vw,200px);line-height:.9;font-weight:800;font-variant-numeric:tabular-nums;text-shadow:0 2px 14px #000c}#settime{font-size:32px;font-variant-numeric:tabular-nums}
 #feedback{position:absolute;bottom:0;left:0;right:0;padding:10px;font-size:20px;font-weight:bold;color:#fff;text-align:center;background:#0008;min-height:44px}
 #feedback.good{background:#16a34acc}#feedback.bad{background:#dc2626cc}
 .replist{font-size:14px;padding-left:20px}.replist .ok{color:#15803d}.replist .ng{color:#b91c1c}
@@ -31,3 +31,25 @@ table{width:100%;border-collapse:collapse;font-size:13px}td,th{border-bottom:1px
 nav{position:fixed;bottom:0;left:0;right:0;display:flex;background:#fff;border-top:1px solid #ddd;padding-bottom:env(safe-area-inset-bottom)}
 nav button{flex:1;border:none;border-radius:0;margin:0;font-size:20px;padding:6px 0;background:none}
 nav span{display:block;font-size:11px}nav button.active{color:#0f766e;background:#ecfdf5}
+/* ダーク×スポーティ */
+:root{--bg:#0b0b0d;--card:#17171a;--line:#2a2a2f;--text:#f4f4f5;--sub:#9a9a9a;--accent:#c6ff00}
+body{background:var(--bg);color:var(--text)}
+header{background:var(--bg);color:var(--accent);border-bottom:1px solid var(--line)}
+h1{letter-spacing:.08em;font-weight:800}
+.card{background:var(--card);box-shadow:none;border:1px solid var(--line);border-radius:16px}
+input,select{background:#0f0f12;color:var(--text);border-color:var(--line)}
+button,.filebtn{background:var(--card);color:var(--text);border-color:var(--line);font-weight:700}
+.primary{background:var(--accent);color:#000;border:none}
+.danger{color:#ff5a5a;border-color:#ff5a5a}
+.note{background:#1f2410;color:#dfff7a}
+.small,.caution{color:var(--sub)}
+.err{color:#ff5a5a}
+.diagram{background:#0f0f12}.diagram text{fill:#ddd}.diagram line{stroke:#888}.diagram circle{fill:#ddd}
+.stage{border-radius:16px}
+#count{color:var(--accent)}
+#feedback.good{background:#c6ff00dd;color:#000}#feedback.bad{background:#ff3b3bdd}
+.replist .ok{color:var(--accent)}.replist .ng{color:#ff5a5a}
+td,th{border-bottom-color:var(--line)}
+.video a{color:var(--accent)}
+nav{background:var(--card);border-top-color:var(--line)}
+nav button{color:var(--sub)}nav button.active{color:var(--accent);background:#1f2410}
