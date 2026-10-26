@@ -180,9 +180,9 @@ function chart(cv, pts, unit) {
   const X = (i) => L + (i * (W - L - 10)) / (pts.length - 1), Y = (v) => 10 + ((max - v) * (H - B - 10)) / (max - min);
   c.fillText(max.toFixed(1), 2, 16); c.fillText(min.toFixed(1), 2, H - B);
   c.fillText(pts[0].d.slice(5), L, H - 4); c.fillText(pts.at(-1).d.slice(5), W - 45, H - 4);
-  c.strokeStyle = '#c6ff00'; c.lineWidth = 2; c.beginPath();
+  c.strokeStyle = '#00f5d4'; c.lineWidth = 2; c.beginPath();
   pts.forEach((p, i) => (i ? c.lineTo(X(i), Y(p.v)) : c.moveTo(X(i), Y(p.v)))); c.stroke();
-  c.fillStyle = '#c6ff00'; pts.forEach((p, i) => { c.beginPath(); c.arc(X(i), Y(p.v), 3, 0, 7); c.fill(); });
+  c.fillStyle = '#00f5d4'; pts.forEach((p, i) => { c.beginPath(); c.arc(X(i), Y(p.v), 3, 0, 7); c.fill(); });
 }
 function renderBody() {
   const b = store.get('body', []).sort((x, y) => x.date.localeCompare(y.date));

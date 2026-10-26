@@ -53,3 +53,28 @@ td,th{border-bottom-color:var(--line)}
 .video a{color:var(--accent)}
 nav{background:var(--card);border-top-color:var(--line)}
 nav button{color:var(--sub)}nav button.active{color:var(--accent);background:#1f2410}
+/* ネオン・サイバー調（劇的版） */
+:root{--accent:#00f5d4;--pink:#ff2bd6;--card:#12102099;--line:#ffffff1f}
+body{background:radial-gradient(900px 500px at 10% -10%,#7c1fff55,transparent 60%),radial-gradient(800px 500px at 100% 0,#ff2bd644,transparent 60%),radial-gradient(900px 600px at 50% 120%,#00f5d433,transparent 60%),#07060f;background-attachment:fixed;background-size:140% 140%;animation:bgmove 14s ease-in-out infinite alternate}
+@keyframes bgmove{from{background-position:0 0,100% 0,50% 100%,0 0}to{background-position:30% 20%,70% 10%,40% 80%,0 0}}
+header{background:#07060fcc;backdrop-filter:blur(12px);border-bottom:1px solid #00f5d455;box-shadow:0 0 24px #00f5d433}
+h1{background:linear-gradient(90deg,#00f5d4,#ff2bd6,#7c1fff);-webkit-background-clip:text;background-clip:text;color:transparent;font-size:22px;font-weight:900;letter-spacing:.14em;text-transform:uppercase}
+h2{color:#fff;text-shadow:0 0 10px #00f5d488}
+.card{background:var(--card);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid #ffffff2b;border-radius:20px;box-shadow:0 0 0 1px #00f5d422,0 8px 32px #7c1fff33}
+.primary{background:linear-gradient(90deg,#00f5d4,#7c1fff 60%,#ff2bd6);color:#fff;font-weight:900;letter-spacing:.06em;box-shadow:0 0 18px #00f5d488,0 0 36px #ff2bd655;text-shadow:0 1px 6px #0008}
+button:active{transform:scale(.97)}
+button,.filebtn{background:#ffffff10;border-color:#ffffff30;backdrop-filter:blur(8px)}
+input,select{background:#0b0a16cc;border-color:#00f5d455;color:#fff}
+input:focus,select:focus{outline:none;box-shadow:0 0 12px #00f5d4aa;border-color:#00f5d4}
+.note{background:#00f5d41a;color:#9ffff0;border:1px solid #00f5d444}
+#count{background:linear-gradient(180deg,#fff,#00f5d4 55%,#ff2bd6);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none;filter:drop-shadow(0 0 18px #00f5d4cc) drop-shadow(0 0 40px #ff2bd699);font-size:clamp(130px,42vw,240px)}
+#settime{color:#00f5d4;text-shadow:0 0 12px #00f5d4}
+.stage{border:2px solid #00f5d4;box-shadow:0 0 24px #00f5d488,0 0 60px #ff2bd644;border-radius:20px}
+#feedback.good{background:linear-gradient(90deg,#00f5d4dd,#7c1fffdd);color:#fff;text-shadow:0 0 10px #000a}
+#feedback.bad{background:linear-gradient(90deg,#ff2bd6dd,#ff3b3bdd)}
+.replist .ok{color:#00f5d4}.replist .ng{color:#ff5ad8}
+nav{background:#07060fd9;backdrop-filter:blur(16px);border-top:1px solid #00f5d455;box-shadow:0 -4px 24px #00f5d422}
+nav button{background:none;border:none;backdrop-filter:none}
+nav button.active{color:#00f5d4;background:none;text-shadow:0 0 12px #00f5d4;border-top:2px solid #00f5d4}
+.video a{color:#ff2bd6}
+@media (prefers-reduced-motion:reduce){body{animation:none}}

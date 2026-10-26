@@ -1,4 +1,4 @@
-const VER = 'squat-v1';
+const VER = 'squat-v2';
 const APP = ['./', 'index.html', 'style.css', 'app.js', 'logic.js', 'manifest.json', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png'];
 self.addEventListener('install', (e) => { e.waitUntil(caches.open(VER).then((c) => c.addAll(APP))); self.skipWaiting(); });
 self.addEventListener('activate', (e) => { e.waitUntil(caches.keys().then((ks) => Promise.all(ks.filter((k) => k !== VER).map((k) => caches.delete(k))))); self.clients.claim(); });
